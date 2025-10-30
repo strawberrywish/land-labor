@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Horizontal Scroll Animation</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+<!-- Styles -->
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	overflow-y: visible;
+	overflow-x: hidden;
+}
+
+#container {
+	height: 100vh;
+	width: 400%;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.horizontal-section {
+	background-color: black;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.horizontal-section:nth-child(1) {
+	background-image: url("https://images.pexels.com/photos/2249527/pexels-photo-2249527.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.horizontal-section:nth-child(2) {
+	background-image: url("https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.horizontal-section:nth-child(3) {
+	background-image: url("https://images.pexels.com/photos/1517076/pexels-photo-1517076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.horizontal-section:nth-child(4) {
+	background-image: url("https://images.pexels.com/photos/1037996/pexels-photo-1037996.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+
+.heading {
+	font-family: "Oswald", sans-serif;
+	font-size: 8vw;
+	font-weight: 300;
+	color: white;
+	letter-spacing: 1vw;
+	text-transform: uppercase;
+	text-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+	<main id="container">
+		<section class="horizontal-section">
+			<h1 class="heading">Horizontal Scroll</h1>
+		</section>
+
+		<section class="horizontal-section">
+			<h1 class="heading">01</h1>
+		</section>
+
+		<section class="horizontal-section">
+			<h1 class="heading">02</h1>
+		</section>
+
+		<section class="horizontal-section">
+			<h1 class="heading">03</h1>
+		</section>
+	</main>
+
+	<script>
+		gsap.registerPlugin(ScrollTrigger);
+
+		const sections = gsap.utils.toArray(".horizontal-section");
+
+		gsap.to(sections, {
+			xPercent: -100 * (sections.length - 1),
+			ease: "none",
+			scrollTrigger: {
+				trigger: "#container",
+				pin: true,
+				scrub: 1,
+				snap: 1 / (sections.length - 1),
+				end: () => "+=" + document.querySelector("#container").scrollWidth,
+				invalidateOnRefresh: true
+			}
+		});
+	</script>
+</body>
+</html>
