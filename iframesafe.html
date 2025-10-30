@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Horizontal + Vertical Scroll with Fades (Iframe Safe)</title>
+<title>Horizontal + Vertical Scroll (Iframe Safe)</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:"Oswald",sans-serif; overflow:hidden; }
 
-/* Internal scroll container (iframe safe) */
+/* Internal scroll area */
 #scroller {
   height:100vh;
   overflow-y:scroll;
@@ -23,9 +23,10 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
   scroll-behavior:smooth;
 }
 
-/* Horizontal groups */
-#container, #container2 {
+/* Horizontal container */
+#container {
   height:100vh;
+  width:400%;
   display:flex;
   flex-wrap:nowrap;
 }
@@ -40,9 +41,6 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  position:relative;
-  opacity:1;
-  transition:opacity 0.6s ease-in-out;
 }
 
 /* Vertical sections */
@@ -55,9 +53,6 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
   align-items:center;
   background-color:#111;
   color:white;
-  opacity:1;
-  position:relative;
-  transition:opacity 0.6s ease-in-out;
 }
 
 /* Background images for horizontal sections */
@@ -87,7 +82,8 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
 
 <body>
 <div id="scroller">
-  <!-- Horizontal group 1 -->
+  
+  <!-- HORIZONTAL SECTION GROUP 1 -->
   <main id="container">
     <section class="horizontal-section"><h1 class="heading">Horizontal Scroll 1</h1></section>
     <section class="horizontal-section"><h1 class="heading">H - 01</h1></section>
@@ -95,35 +91,39 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
     <section class="horizontal-section"><h1 class="heading">H - 03</h1></section>
   </main>
 
-  <!-- Fade transition -->
-  <section class="vertical-section" id="fadeA" style="background-color:#222;">
+  <!-- VERTICAL SECTION 1 -->
+  <section class="vertical-section" style="background-color:#222;">
     <h1 class="heading" style="font-size:5vw;">Vertical Scroll A</h1>
     <p style="width:60%;text-align:center;font-size:1.5vw;line-height:1.6;">
-      This section fades in after the first horizontal scroll, creating a soft transition.
+      This vertical section flows naturally after the first horizontal group.
+      It’s part of the same internal scroll container.
     </p>
   </section>
 
-  <!-- Horizontal group 2 -->
+  <!-- HORIZONTAL SECTION GROUP 2 -->
   <main id="container2">
     <section class="horizontal-section"><h1 class="heading">Horizontal Scroll 2</h1></section>
     <section class="horizontal-section"><h1 class="heading">H - 04</h1></section>
     <section class="horizontal-section"><h1 class="heading">H - 05</h1></section>
   </main>
 
-  <!-- Fade transition -->
-  <section class="vertical-section" id="fadeB" style="background-color:#333;">
+  <!-- VERTICAL SECTION 2 -->
+  <section class="vertical-section" style="background-color:#333;">
     <h1 class="heading" style="font-size:5vw;">Vertical Scroll B</h1>
     <p style="width:60%;text-align:center;font-size:1.5vw;line-height:1.6;">
-      The final section fades in as the second horizontal group completes.
+      This is the final vertical section — you can stack content or transitions here.
     </p>
   </section>
+
 </div>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+// Use the internal scroller (iframe safe)
 const scroller = document.querySelector("#scroller");
 
-/* --- Horizontal group 1 --- */
+// Handle first horizontal group
 const sections1 = gsap.utils.toArray("#container .horizontal-section");
 gsap.to(sections1, {
   xPercent: -100 * (sections1.length - 1),
@@ -138,20 +138,7 @@ gsap.to(sections1, {
   }
 });
 
-/* --- Fade-in for first vertical section --- */
-gsap.from("#fadeA", {
-  opacity: 0,
-  duration: 1.2,
-  scrollTrigger: {
-    scroller: scroller,
-    trigger: "#fadeA",
-    start: "top 80%",
-    end: "top 40%",
-    scrub: true
-  }
-});
-
-/* --- Horizontal group 2 --- */
+// Handle second horizontal group
 const sections2 = gsap.utils.toArray("#container2 .horizontal-section");
 gsap.to(sections2, {
   xPercent: -100 * (sections2.length - 1),
@@ -163,19 +150,6 @@ gsap.to(sections2, {
     scrub: 1,
     snap: 1 / (sections2.length - 1),
     end: () => "+=" + document.querySelector("#container2").scrollWidth
-  }
-});
-
-/* --- Fade-in for final vertical section --- */
-gsap.from("#fadeB", {
-  opacity: 0,
-  duration: 1.2,
-  scrollTrigger: {
-    scroller: scroller,
-    trigger: "#fadeB",
-    start: "top 80%",
-    end: "top 40%",
-    scrub: true
   }
 });
 </script>
