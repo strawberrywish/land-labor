@@ -84,31 +84,29 @@ body { font-family:"Oswald",sans-serif; overflow:hidden; }
 <script>
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
-// Select elements inside the iframe
+// Dynamically set container width based on number of sections
 const scroller = document.querySelector("#scroller");
 const container = document.querySelector("#container");
 const sections = gsap.utils.toArray(".horizontal-section");
 
-//Dynamically set the container width (iframe-safe)
+// set container width dynamically (100vw * number of sections)
 container.style.width = `${sections.length * 100}vw`;
 
-// Main horizontal scroll animation
 gsap.to(sections, {
   xPercent: -100 * (sections.length - 1),
   ease: "none",
   scrollTrigger: {
-    scroller: scroller,        // use internal div, not window
-    trigger: container,
+    scroller: scroller,        // tie scrollTrigger to div
+    trigger: "#container",
     pin: true,
-    pinType: "transform",      // crucial for iframe compatibility
+	pinType: "transform",
     scrub: 1,
     snap: 1 / (sections.length - 1),
-    end: () => "+=" + container.scrollWidth,
+    end: () => "+=" + document.querySelector("#container").scrollWidth,
     invalidateOnRefresh: true
   }
 });
-
-// Optional typewriter animation for "Milk is Dairy"
+// Typewriter animation for "Milk is Dairy"
 gsap.to("#milkText", {
   text: "Milk is Dairy",
   duration: 3,
@@ -116,10 +114,10 @@ gsap.to("#milkText", {
   scrollTrigger: {
     scroller: scroller,
     trigger: "#milkText",
-    start: "center center",
+    start: "center center",   // start typing when section centers
     toggleActions: "play none none reverse"
   }
-});
+});	
 </script>
 </body>
 </html>
