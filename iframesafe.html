@@ -1,123 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Horizontal Scroll (Iframe-Safe)</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8">
+    <title>Turnover?</title>
+    <link rel="stylesheet" href="./style.css">
 
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/TextPlugin.min.js"></script>
+  </head>
+    
+  <body>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:"Oswald",sans-serif; overflow:hidden; }
-
-#scroller {
-  height:100vh;            /* visible area inside iframe */
-  overflow-y:scroll;       /* user scrolls this div */
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-}
-
-#container {
-  display:flex;
-  flex-wrap:nowrap;
-  height:100vh;
-}
-
-.horizontal-section {
-  width:100vw;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-}
-
-.horizontal-section:nth-child(1) {
-  background-image:url("https://images.pexels.com/photos/34344666/pexels-photo-34344666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-.horizontal-section:nth-child(2) {
-  background-image:url("https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-.horizontal-section:nth-child(3) {
-  background-image:url("https://images.pexels.com/photos/1517076/pexels-photo-1517076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-.horizontal-section:nth-child(4) {
-  background-image:url("https://images.pexels.com/photos/1037996/pexels-photo-1037996.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-.horizontal-section:nth-child(5) {
-  background-image:url("https://images.pexels.com/photos/2457278/pexels-photo-2457278.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-.horizontal-section:nth-child(6) {
-  background-image:url("https://images.pexels.com/photos/206935/pexels-photo-206935.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
-}
-
-.heading {
-  color:black;
-  font-size:8vw;
-  font-weight:300;
-  letter-spacing:1vw;
-  text-transform:uppercase;
-  text-shadow:0 0 20px rgba(0,0,0,0.5);
-}
-</style>
-</head>
-
-<body>
 <div id="scroller">
   <main id="container">
-    <section class="horizontal-section"><h1 class="heading">Milk is Dairy</h1></section>
+    <section class="horizontal-section"><h1 class="heading" id="milkText">Milk is Dairy</h1></section>
     <section class="horizontal-section"><h1 class="heading">01</h1></section>
     <section class="horizontal-section"><h1 class="heading">02</h1></section>
     <section class="horizontal-section"><h1 class="heading">03</h1></section>
-	<section class="horizontal-section"><h1 class="heading">04</h1></section><section class="horizontal-section"><h1 class="heading">05</h1></section>
+    <section class="horizontal-section"><h1 class="heading">04</h1></section>
+    <section class="horizontal-section"><h1 class="heading">05</h1></section>
   </main>
 </div>
+    <script src='https://unpkg.com/gsap@3/dist/gsap.min.js'></script>
+<script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
+<script src='https://unpkg.com/gsap@3/dist/TextPlugin.min.js'></script><script  src="./script.js"></script>
 
-<script>
-gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-// Dynamically set container width based on number of sections
-const scroller = document.querySelector("#scroller");
-const container = document.querySelector("#container");
-const sections = gsap.utils.toArray(".horizontal-section");
-
-// set container width dynamically (100vw * number of sections)
-container.style.width = `${sections.length * 100}vw`;
-
-gsap.to(sections, {
-  xPercent: -100 * (sections.length - 1),
-  ease: "none",
-  scrollTrigger: {
-    scroller: scroller,        // tie scrollTrigger to div
-    trigger: "#container",
-    pin: true,
-	pinType: "transform",
-    scrub: 1,
-    snap: 1 / (sections.length - 1),
-    end: () => "+=" + document.querySelector("#container").scrollWidth,
-    invalidateOnRefresh: true
-  }
-});
-// Typewriter animation for "Milk is Dairy"
-gsap.to("#milkText", {
-  text: "Milk is Dairy",
-  duration: 3,
-  ease: "none",
-  scrollTrigger: {
-    scroller: scroller,
-    trigger: "#milkText",
-    start: "center center",   // start typing when section centers
-    toggleActions: "play none none reverse"
-  }
-});	
-</script>
-</body>
+  </body>
+  
 </html>
