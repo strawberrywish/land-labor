@@ -1,0 +1,35 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Oswald",sans-serif; overflow:hidden; }
+
+#scroller {
+  height:100vh;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+
+#container {
+  display:flex;
+  flex-wrap:nowrap;
+  height:100vh;
+}
+
+.horizontal-section {
+  width:100vw;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+.heading {
+  color:black;
+  font-size:8vw;
+  font-weight:300;
+  letter-spacing:1vw;
+  text-transform:uppercase;
+  text-shadow:0 0 20px rgba(0,0,0,0.5);
+}
